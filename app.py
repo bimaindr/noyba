@@ -41,9 +41,6 @@ except Exception as e:
 class_names = ["covid", "lung normal", "lung opacity", "viral pneumonia"]
 IMG_SIZE = 224
 
-st.write("Python:", sys.version)
-st.write("TF version:", tf.__version__)
-
 def preprocess_image(image):
     # Resize gambar ke ukuran 224x224 (standar Colab/EfficientNet)
     image = image.resize((IMG_SIZE, IMG_SIZE))
