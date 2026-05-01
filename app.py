@@ -1,5 +1,5 @@
 import os
-# WAJIB: Letakkan paling atas untuk memaksa penggunaan Keras lama
+# WAJIB: Letakkan di baris pertama untuk memaksa penggunaan Keras lama
 os.environ["TF_USE_LEGACY_KERAS"] = "1"
 
 import streamlit as st
@@ -19,19 +19,18 @@ st.write("Upload gambar X-ray untuk mendapatkan prediksi.")
 # =========================
 # LOAD MODEL
 # =========================
-# Pastikan nama file ini sesuai dengan yang ada di GitHub kamu
+# Nama file disesuaikan dengan screenshot: model_parurasio801010.h5
 MODEL_PATH = "model_parurasio801010.h5" 
 
 @st.cache_resource
 def load_model():
-    # safe_mode=False digunakan untuk mengatasi error 'Unrecognized keyword arguments' pada InputLayer
+    # safe_mode=False digunakan untuk mengatasi error deserialisasi pada InputLayer
     return tf.keras.models.load_model(MODEL_PATH, compile=False, safe_mode=False)
 
 try:
     model = load_model()
 except Exception as e:
     st.error(f"Gagal memuat model: {e}")
-    st.info("Pastikan file model .h5 sudah ada di repo dan versi library sesuai.")
     st.stop()
 
 # =========================
@@ -46,7 +45,7 @@ uploaded_file = st.file_uploader("Upload gambar X-ray", type=["jpg", "png", "jpe
 
 if uploaded_file is not None:
     image = Image.open(uploaded_file).convert("RGB")
-    st.image(image, caption="Gambar yang diupload", use_column_width=True)
+    st.image(image, caption="Gambar yang diupload", use_container_width=True)
 
     # Preprocessing
     img = image.resize((224, 224))
